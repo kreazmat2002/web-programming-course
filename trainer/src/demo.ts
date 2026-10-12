@@ -6,7 +6,7 @@ import {
   calculateProgress 
 } from './domain';
 
-const sampleSet1: TrainingSet = {
+export const sampleSet1: TrainingSet = {
   id: 'web-basics',
   title: 'Основы веб-программирования',
   tasks: [
@@ -31,9 +31,9 @@ const sampleSet1: TrainingSet = {
   ]
 };
 
-const sampleSet2: TrainingSet = {
+export const sampleSet2: TrainingSet = {
   id: 'set-empty-theme',
-  title: 'Альтернативная пустая тема',
+  title: 'Пустая тема',
   tasks: []
 };
 
@@ -45,6 +45,16 @@ const userAnswers: Answer[] = [
   { taskId: 'react-1', kind: 'short-text', text: '    ' }, 
   { taskId: 'http-1', kind: 'short-text', text: 'Fetch check' } 
 ];
+
+const userAnswers2: Answer[] = [
+  { taskId: 'ts-1', kind: 'single-choice', optionId: 'b' },
+  { taskId: 'react-1', kind: 'short-text', text: 'test' }
+];
+
+const lengthBeforeT = sampleSet1.tasks.length;
+const lengthBeforeT2 = sampleSet2.tasks.length;
+const lengthBeforeA = userAnswers.length;
+const lengthBeforeA2 = userAnswers2.length;
 
 Object.freeze(userAnswers);
 
@@ -71,11 +81,16 @@ console.log('Расчет прогресса:');
 const mainProgress = calculateProgress(sampleSet1, userAnswers);
 console.log(`Набор "web-basics": заполнено ${mainProgress.filled} из ${mainProgress.total} (по факту 1 из 2)`);
 
+const mainProgress2 = calculateProgress(sampleSet1, userAnswers2);
+console.log(`Набор "web-basics": заполнено ${mainProgress2.filled} из ${mainProgress2.total} (по факту 2 из 2)`);
+
 const emptyProgress = calculateProgress(sampleSet2, userAnswers);
 console.log(`Пустой набор: заполнено ${emptyProgress.filled} из ${emptyProgress.total} (по факту 0 из 0)`);
 console.log();
 
 // Контроль чистоты функций
 console.log('Проверка иммутабельности входов:');
-console.log('Задачи в наборе не изменились:', sampleSet1.tasks.length === 2 ? 'Да' : 'Нет');
-console.log('Массив ответов пользователя не изменился:', userAnswers.length === 3 ? 'Да' : 'Нет');
+console.log('Задачи в наборе 1 не изменились:', sampleSet1.tasks.length === lengthBeforeT ? 'Да' : 'Нет');
+console.log('Задачи в наборе 2 не изменились:', sampleSet2.tasks.length === lengthBeforeT2 ? 'Да' : 'Нет');
+console.log('Массив ответов пользователя не изменился:', userAnswers.length === lengthBeforeA ? 'Да' : 'Нет');
+console.log('Массив ответов 2пользователя не изменился:', userAnswers2.length === lengthBeforeA2 ? 'Да' : 'Нет');
